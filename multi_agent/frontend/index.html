@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multi-Agent UI</title>
+</head>
+<body>
+  <h1>Multi-Agent Platform</h1>
+  <textarea id="input" placeholder="Enter prompt"></textarea><br/>
+  <button onclick="runAI()">Run AI Task</button>
+  <pre id="output"></pre>
+
+<script>
+async function runAI(){
+  const input = document.getElementById("input").value;
+  const res = await fetch("http://127.0.0.1:8000/run-task", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      task_type:"ai",
+      payload:{prompt:input}
+    })
+  });
+  const data = await res.json();
+  document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+}
+</script>
+</body>
+</html>
